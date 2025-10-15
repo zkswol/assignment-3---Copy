@@ -1,12 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(express.json()); // to parse JSON bodies
 const PORT = 8080;
 app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));
-app.use(cors());
+// Serve Angular build output (relative to this file at frontend/backend/app.js)
+app.use(express.static(path.join(__dirname, '../dist/frontend/browser')));
 
 mongoose.connect('mongodb://127.0.0.1:27017/cloud_kitchen_pro');
 
