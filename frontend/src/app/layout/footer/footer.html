@@ -1,0 +1,53 @@
+<footer class="bg-dark text-light py-4 mt-auto">
+  <div class="container">
+    <div class="row">
+      <!-- Application Info -->
+      <div class="col-md-4 mb-3">
+        <h5 class="text-primary mb-3">
+          <img src="logo.png" alt="Logo" height="24" class="me-2">
+          {{ appInfo.name }}
+        </h5>
+        <p class="text-muted small">{{ appInfo.description }}</p>
+        <p class="text-muted small mb-0">Version {{ appInfo.version }}</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="col-md-4 mb-3">
+        <h6 class="text-primary mb-3">Quick Links</h6>
+        <ul class="list-unstyled">
+          <li *ngFor="let link of quickLinks" class="mb-2">
+            <a [routerLink]="[link.route]" [queryParams]="{userId: user()?.userId}" 
+               class="text-light text-decoration-none small">
+              {{ link.label }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-4 mb-3">
+        <h6 class="text-primary mb-3">Information</h6>
+        <div class="small text-muted">
+          <p class="mb-1"><strong>Student:</strong> {{ contactInfo.student }}</p>
+          <p class="mb-1"><strong>Student ID:</strong> {{ contactInfo.studentId }}</p>
+          <p class="mb-1"><strong>Course:</strong> {{ contactInfo.course }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <hr class="my-3 border-secondary">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <p class="small text-muted mb-0">
+          © {{ currentYear }} {{ appInfo.name }}. All rights reserved.
+        </p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <p class="small text-muted mb-0">
+          Built with Angular & Bootstrap
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

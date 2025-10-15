@@ -1,0 +1,45 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Login</h2>
+
+          <div *ngIf="serverMessage" class="alert" 
+               [class.alert-success]="serverMessage.toLowerCase().includes('success')"
+               [class.alert-danger]="!serverMessage.toLowerCase().includes('success')">
+            {{ serverMessage }}
+          </div>
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email">
+              <small class="text-danger" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+                Valid email required.
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" formControlName="password" minlength="8">
+              <small class="text-danger" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+                Password is required.
+              </small>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="loading || form.invalid">
+              {{ loading ? 'Signing in…' : 'Login' }}
+            </button>
+          </form>
+
+          <div class="text-center mt-3">
+            <p class="mb-0">No account yet?
+              <a routerLink="/register-34475338">Register here</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

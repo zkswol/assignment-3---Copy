@@ -1,0 +1,28 @@
+.main-layout {
+  min-height: 100vh;
+}
+
+main {
+  padding-top: 0;
+}
+
+/* Ensure proper spacing between components */
+main > * {
+  margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  main {
+    padding-top: 0;
+  }
+}
+
+/* Ensure footer stays at bottom */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}

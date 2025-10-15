@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container">
+    <!-- Logo and Brand -->
+    <a class="navbar-brand d-flex align-items-center" (click)="navigateTo('/dashboard-34475338')" style="cursor: pointer;">
+      <img src="logo.png" alt="CloudKitchen Pro" height="40" class="me-2">
+      <span class="fw-bold">CloudKitchen Pro</span>
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navigation Menu -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item" *ngFor="let item of navItems">
+          <a class="nav-link" (click)="navigateTo(item.route)" style="cursor: pointer;">
+            <span class="me-1">{{ item.icon }}</span>
+            {{ item.label }}
+          </a>
+        </li>
+      </ul>
+
+      <!-- User Menu -->
+      <ul class="navbar-nav" *ngIf="isLoggedIn()">
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center" (click)="logout()" style="cursor: pointer;">
+            <span class="me-2">👤</span>
+            <span>{{ userName() }}</span>
+            <span class="ms-2">🚪</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Login/Register for non-authenticated users -->
+      <ul class="navbar-nav" *ngIf="!isLoggedIn()">
+        <li class="nav-item">
+          <a class="nav-link" (click)="navigateTo('/login-34475338')" style="cursor: pointer;">
+            <span class="me-1">🔑</span>Login
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="navigateTo('/register-34475338')" style="cursor: pointer;">
+            <span class="me-1">📝</span>Register
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

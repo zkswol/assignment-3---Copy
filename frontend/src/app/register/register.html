@@ -1,0 +1,70 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">Register</h2>
+
+          <!-- Angular message (from your component's serverMessage) -->
+          <div *ngIf="serverMessage" class="alert" [class.alert-success]="serverMessage.includes('success')" [class.alert-danger]="!serverMessage.includes('success')">
+            {{ serverMessage }}
+          </div>
+
+          <!-- Reactive form -->
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" formControlName="fullname" minlength="2" maxlength="100" >
+              <small class="text-danger" *ngIf="registerForm.get('fullname')?.touched && registerForm.get('fullname')?.invalid">
+                Full name is required.
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email">
+              <small class="text-danger" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+                Valid email is required.
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" formControlName="password" minlength="8">
+              <div class="form-text">Minimum 8 characters, with at least one letter and one number.</div>
+              <small class="text-danger" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+                Password is required.
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <select class="form-select" formControlName="role">
+                <option value="admin">Admin</option>
+                <option value="chef">Chef</option>
+                <option value="manager">Manager</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input type="text" class="form-control" placeholder="+61 4xx xxx xxx" formControlName="phone">
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary" [disabled]="loading || registerForm.invalid">
+                {{ loading ? 'Registering…' : 'Register' }}
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-3">
+            <p class="mb-0">Already have an account?
+              <a routerLink="/login-34475338">Login here</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

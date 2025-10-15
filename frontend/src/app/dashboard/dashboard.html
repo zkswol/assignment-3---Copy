@@ -1,0 +1,50 @@
+<div class="container py-4">
+  <div class="d-flex align-items-center mb-4">
+    <img src="logo.png" alt="Logo" height="120" class="me-3">
+    <div>
+        <p>Student name: Khor Zhi Kun</p>
+        <p>Student ID: 34475338</p>
+      <h3 class="mb-0">{{ welcome() }}</h3>
+      <small class="text" *ngIf="user()?.userId">User ID: {{ user()?.userId }}</small><br>
+      <small class="text" *ngIf="user()?.role">User Role: {{ user()?.role }}</small>
+    </div>
+    <div class="ms-auto d-flex gap-2">
+      <button class="btn btn-outline-secondary" (click)="refreshNow()">Refresh</button>
+      <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading()">Loading…</div>
+  <div *ngIf="error()" class="alert alert-danger">{{ error() }}</div>
+
+  <div class="row g-3" *ngIf="stats()">
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm"><div class="card-body">
+        <div class="text-muted">Total Recipes</div>
+        <h3 class="mb-0">{{ stats()!.recipes }}</h3>
+      </div></div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm"><div class="card-body">
+        <div class="text-muted">Inventory Items</div>
+        <h3 class="mb-0">{{ stats()!.inventory }}</h3>
+      </div></div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm"><div class="card-body">
+        <div class="text-muted">Users</div>
+        <h3 class="mb-0">{{ stats()!.users }}</h3>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h5>Quick Actions</h5>
+    <div class="d-flex flex-wrap gap-2">
+      <a *ngIf="isChef()" [routerLink]="['/list-recipes-34475338']" [queryParams]="{userId: user()?.userId}" class="btn btn-outline-success">View Recipes</a>
+      <a *ngIf="isChef()" [routerLink]="['/recipes/new']" [queryParams]="{userId: user()?.userId}" class="btn btn-primary">Create Recipe</a>
+      <a [routerLink]="['/inventory']" [queryParams]="{userId: user()?.userId}" class="btn btn-outline-info">Manage Inventory</a>
+      <a [routerLink]="['/inventory/new']" [queryParams]="{userId: user()?.userId}" class="btn btn-outline-primary">Add Inventory</a>
+    </div>
+  </div>
+</div>

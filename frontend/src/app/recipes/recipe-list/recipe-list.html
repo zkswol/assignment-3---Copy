@@ -1,0 +1,64 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-secondary" (click)="goBack()">← Back to Dashboard</button>
+      <h3 class="mb-0">Recipes</h3>
+    </div>
+    <a [routerLink]="['/recipes/new']" [queryParams]="{userId: userId}" class="btn btn-primary">+ New Recipe</a>
+  </div>
+
+  <div *ngIf="loading">Loading…</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <div class="table-responsive" *ngIf="!loading && rows.length">
+    <table class="table table-striped align-middle">
+      <thead>
+        <tr>
+          <th>Recipe Id</th><th>User Id</th><th>Owner Id</th><th>Title</th><th>Chef</th><th>Ingredients</th><th>Instructions</th>
+          <th>Meal Type</th><th>Cuisine Type</th><th>Prep Time</th><th>Difficulty</th><th>Servings</th><th>Created Date</th><th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of rows">
+          <td>{{ r.recipeId }}</td>
+          <td>{{ r.userId }}</td>
+          <td>{{ r.ownerId }}</td>
+          <td>{{ r.title }}</td>
+          <td>{{ r.chef }}</td>
+          <td>{{ getIngredientDisplay(r.ingredients) }}</td>
+          <td>{{ r.instructions.join(' ') || '—' }}</td>
+          <td>{{ r.mealType }}</td>
+          <td>{{ r.cuisineType || '—' }}</td>
+          <td>{{ r.prepTime || 0 }} min</td>
+          <td>{{ r.difficulty }}</td>
+          <td>{{ r.servings }}</td>
+          <td>{{ r.createdDate }}</td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-secondary me-1" [routerLink]="['/recipes', r.recipeId, 'detail']" [queryParams]="{userId: userId}">View</a>
+            <a *ngIf="isOwner(r)" class="btn btn-sm btn-outline-primary me-1" [routerLink]="['/recipes', r.recipeId, 'edit']" [queryParams]="{userId: userId}">Edit</a>
+            <button *ngIf="isOwner(r)" class="btn btn-sm btn-danger" (click)="openDeleteModal(deleteModal, r.recipeId, r.title)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!loading && !rows.length" class="text-muted">No recipes yet.</div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete Recipe</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete this recipe?</p>
+    <p><small class="text-muted">This action cannot be undone.</small></p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="modal.close('yes')">Yes, Delete</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close('no')">Cancel</button>
+  </div>
+</ng-template>
+

@@ -1,0 +1,151 @@
+<div class="create-container">
+  <div class="header">
+    <div class="header-left">
+      <button (click)="goBack()" class="btn-back">← Back to Inventory</button>
+      <h2>Add New Inventory Item</h2>
+    </div>
+    <button (click)="onCancel()" class="btn-secondary">Cancel</button>
+  </div>
+
+  <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()" class="inventory-form">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="ingredientName">Ingredient Name *</label>
+        <input 
+          type="text" 
+          id="ingredientName" 
+          formControlName="ingredientName"
+          placeholder="Enter ingredient name"
+          [class.error]="f['ingredientName'].invalid && f['ingredientName'].touched"
+        >
+        <div *ngIf="f['ingredientName'].invalid && f['ingredientName'].touched" class="error-message">
+          {{ getFieldError('ingredientName') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Quantity *</label>
+        <input 
+          type="number" 
+          id="quantity" 
+          formControlName="quantity"
+          step="0.01"
+          min="0.01"
+          max="9999"
+          placeholder="Enter quantity"
+          [class.error]="f['quantity'].invalid && f['quantity'].touched"
+        >
+        <div *ngIf="f['quantity'].invalid && f['quantity'].touched" class="error-message">
+          {{ getFieldError('quantity') }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="unit">Unit *</label>
+        <select 
+          id="unit" 
+          formControlName="unit"
+          [class.error]="f['unit'].invalid && f['unit'].touched"
+        >
+          <option value="">Select unit</option>
+          <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+        </select>
+        <div *ngIf="f['unit'].invalid && f['unit'].touched" class="error-message">
+          {{ getFieldError('unit') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category *</label>
+        <select 
+          id="category" 
+          formControlName="category"
+          [class.error]="f['category'].invalid && f['category'].touched"
+        >
+          <option value="">Select category</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+        <div *ngIf="f['category'].invalid && f['category'].touched" class="error-message">
+          {{ getFieldError('category') }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="purchaseDate">Purchase Date *</label>
+        <input 
+          type="date" 
+          id="purchaseDate" 
+          formControlName="purchaseDate"
+          [class.error]="f['purchaseDate'].invalid && f['purchaseDate'].touched"
+        >
+        <div *ngIf="f['purchaseDate'].invalid && f['purchaseDate'].touched" class="error-message">
+          {{ getFieldError('purchaseDate') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="expirationDate">Expiration Date *</label>
+        <input 
+          type="date" 
+          id="expirationDate" 
+          formControlName="expirationDate"
+          [class.error]="f['expirationDate'].invalid && f['expirationDate'].touched"
+        >
+        <div *ngIf="f['expirationDate'].invalid && f['expirationDate'].touched" class="error-message">
+          {{ getFieldError('expirationDate') }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="location">Location *</label>
+        <select 
+          id="location" 
+          formControlName="location"
+          [class.error]="f['location'].invalid && f['location'].touched"
+        >
+          <option value="">Select location</option>
+          <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+        </select>
+        <div *ngIf="f['location'].invalid && f['location'].touched" class="error-message">
+          {{ getFieldError('location') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="cost">Cost *</label>
+        <input 
+          type="number" 
+          id="cost" 
+          formControlName="cost"
+          step="0.01"
+          min="0.01"
+          max="999.99"
+          placeholder="Enter cost"
+          [class.error]="f['cost'].invalid && f['cost'].touched"
+        >
+        <div *ngIf="f['cost'].invalid && f['cost'].touched" class="error-message">
+          {{ getFieldError('cost') }}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="error-message global-error">
+      {{ error }}
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="onCancel()" class="btn-secondary" [disabled]="loading">
+        Cancel
+      </button>
+      <button type="submit" class="btn-primary" [disabled]="loading || inventoryForm.invalid">
+        {{ loading ? 'Creating...' : 'Create Item' }}
+      </button>
+    </div>
+  </form>
+</div>
