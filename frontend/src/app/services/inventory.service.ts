@@ -19,7 +19,7 @@ export interface InventoryItem {
 
 @Injectable({ providedIn: 'root' })
 export class InventoryService {
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = '';
   inventory = signal<InventoryItem[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
