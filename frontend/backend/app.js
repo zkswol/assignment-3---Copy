@@ -1,14 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 
 const app = express();
 app.use(express.json()); // to parse JSON bodies
 const PORT = 8080;
-// Serve Angular build output (absolute path from this file)
-const STATIC_DIR = path.join(__dirname, '../dist/frontend/browser');
-app.use(express.static(STATIC_DIR));
-app.listen(PORT, '0.0.0.0', () => console.log(`API server running on http://0.0.0.0:${PORT}`));
+app.listen(PORT, () => console.log(`API server running on http://localhost:${PORT}`));
+// Serve Angular build output (relative to this file at frontend/backend/app.js)
+app.use(express.static('./dist/frontend/browser'));
 
 mongoose.connect('mongodb://127.0.0.1:27017/cloud_kitchen_pro');
 
@@ -442,9 +440,4 @@ app.delete('/inventory-34475338/:id', async (req, res) => {
     console.error(err);
     res.status(500).json({ ok: false, error: 'Server error' });
   }
-});
-
-// SPA fallback: serve Angular index.html for any other GET route
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(STATIC_DIR, 'index.html'));
 });
